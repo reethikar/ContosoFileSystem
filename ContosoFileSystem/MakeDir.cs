@@ -7,7 +7,7 @@ namespace ContosoFileSystem
 {
     class MakeDir
     {
-        public static void MakeDirectory(string send)
+        public static int MakeDirectory(string send)
         {
             string currDir = Directory.GetCurrentDirectory();
             send = send.Trim();
@@ -52,7 +52,7 @@ namespace ContosoFileSystem
                     Console.WriteLine("\t Input Error. Try again.\n\t Type \"help md\" for help on syntax.\n\t Type exit/logout to exit.");
                 }
             }
-
+            return 1;
         }
 
     }

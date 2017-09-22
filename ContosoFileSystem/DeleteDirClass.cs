@@ -27,7 +27,7 @@ namespace ContosoFileSystem
                 Console.WriteLine("Directory {0} does not exist. Check help menu for more details. Type \"help del\".",check);
             }
         }
-        public static void DeleteDirectory(string input)
+        public static int DeleteDirectory(string input)
         {
             if (input.Contains(":"))
             {
@@ -39,6 +39,7 @@ namespace ContosoFileSystem
                 string toCheck = currDir + "\\" + input;
                 CheckAndDelete(toCheck); 
             }
+            return 1;
         }
 
        

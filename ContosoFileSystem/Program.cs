@@ -45,61 +45,66 @@ namespace ContosoFileSystem
             string input = Console.ReadLine();
             try
             {
-                firstThree = input.Substring(0, 3).Trim();
                 firstTwo = input.Substring(0, 2).Trim();
-                if (input.Length > 4)
+            }
+            catch
+            {
+                firstTwo = null;
+                firstThree = null;
+                isHelp = null;
+                Console.WriteLine("\tInput Error.");
+
+            }
+            try
+            {
+                firstThree = input.Substring(0, 3).Trim();
+            }
+            catch
+            {
+                isHelp = null;
+                firstThree = null;
+            }
+            try
+            { 
+            if (input.Length > 4)
                     isHelp = input.Substring(0, 4).Trim();
             }
             catch
             {
-                Console.WriteLine("\tInput Error.");
-                firstTwo = null;
                 isHelp = null;
-                firstThree = null;
-                toReturn = 1;
             }
             try
             {
                 if ((firstTwo.ToUpper()) == "MD")
                 {
                     string send = input.Substring(3);
-                    MakeDir.MakeDirectory(send);
-                    toReturn = 1;
+                    toReturn = MakeDir.MakeDirectory(send);
                 }
                 else if ((firstTwo.ToUpper()) == "CD")
                 {
                     toReturn = ChangeDir.ChangeDirectory(input);
                 }
-                else if ((input == "logout") || (input == "exit"))
-                {
-                    toReturn = 0;
-                }
                 else if ((isHelp != null) && (isHelp.ToUpper() == "HELP"))
                 {
                     string word = input.Substring(5);
-                    HelpClass.PrintHelp(word);
-                    toReturn = 1;
+                    toReturn = HelpClass.PrintHelp(word);
+                    
                 }
                 else if (firstThree.ToUpper() == "DIR")
                 {
                     string path;
-                    try
-                    {
-                        path = input.Substring(4);
-                        path = path.Trim();
-                    }
-                    catch
-                    {
-                        path = Directory.GetCurrentDirectory();
-                    }
-                    ListOfFiles.PrintFiles(path);
-                    toReturn = 1;
+                    path = Directory.GetCurrentDirectory();
+                    toReturn = ListOfFiles.PrintDirs(path);
+                    //ListOfFiles.PrintFiles(path);
                 }
                 else if ((firstThree.ToUpper()) == "DEL")
                 {
                     string send = input.Substring(4).Trim();
-                    DeleteDirClass.DeleteDirectory(send);
-                    toReturn = 1;
+                    toReturn = DeleteDirClass.DeleteDirectory(send);
+                }
+                else if ((input == "logout") || (input == "exit"))
+                {
+                    toReturn = 0;
                 }
                 else
                 {
@@ -107,8 +112,9 @@ namespace ContosoFileSystem
                     toReturn = 1;
                 }
             }
-            catch
+            catch (Exception e) 
             {
+                Console.WriteLine(e);
                 Console.WriteLine("\tTry again or try help menu. \n\tType exit/logout to exit.");
                 toReturn = 1;
             }
